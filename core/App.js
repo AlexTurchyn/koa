@@ -4,6 +4,7 @@ const bodyParser = require("koa-bodyparser");
 
 const config = require('config');
 const mainRoutes = require("routes/main");
+const ideas = require("../ideas");
 
 const app = new Koa();
 

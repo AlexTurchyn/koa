@@ -8,8 +8,7 @@ class Response {
     static json(ctx, json = {}) {
         ctx.status = 200;
         ctx.type = 'json';
-        ctx.body = json;
-        
+        ctx.body = json;   
     }
 
     static error(ctx, message = "Server error", status = 500) {
