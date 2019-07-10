@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "12factor-config": "^2.0.0",
+    "@hapi/joi": "^15.1.0",
     "dotenv": "^8.0.0",
     "koa": "^2.7.0",
     "koa-bodyparser": "^4.2.1",

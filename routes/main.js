@@ -5,7 +5,6 @@ const AppModule = require("core/modules/AppModule");
 const router = new Router();
 
 router.get("/ping", ctx => {
-    console.log(ctx);
     return AppModule.ping(ctx);
 });
 router.get("/ideas", async ctx => {
