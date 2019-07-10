@@ -1,5 +1,4 @@
 const Response = require("core/Response");
-const ideas = require("ideas");
 
 
 class AppModule {
@@ -7,29 +6,34 @@ class AppModule {
         return Response.text(ctx, "pong");
     }
     async getAllIdeas(ctx) {
-        console.log(ctx);
-        return Response.json(ctx, ideas);
+        const result = await ctx.db.query('SELECT * FROM ideas');
+        return Response.json(ctx, result.rows);
     }
     async getIdea(ctx) {
         const ideaID = ctx.request.params.id;
-        return Response.json(ctx, ideas[ideaID]);
+        const result = await ctx.db.query(`SELECT * FROM ideas i WHERE i.idea_id = ${ideaID};`);
+        return Response.json(ctx, result.rows);
     }
     async postIdea(ctx) {
-        const lastIdeasID = Object.keys(ideas).length;
-        const ideaID = lastIdeasID + 1;
-
-        ideas[ideaID] = ctx.request.body;
-        return Response.json(ctx, ideas[ideaID]);
+        const {title, description, author_id} = ctx.request.body;
+        const result = await ctx.db.query(`
+            INSERT INTO ideas (title, description, author_id) 
+            VALUES ($1, $2, $3) RETURNING *`, [title, description, author_id]
+        );
+        return Response.json(ctx, result.rows[0]);
     }
     async deleteIdea(ctx) {
         const ideaID = ctx.request.params.id;
-        delete ideas[ideaID];
-        return Response.json(ctx, ideas[ideaID]);
+        const result = await ctx.db.query(`DELETE FROM ideas i WHERE i.idea_id = $1 RETURNING *`, [ideaID]);
+        return Response.json(ctx, result.rows[0]);
     }
     async editIdea(ctx) {
-        const ideaID = ctx.request.params.id;
-        ideas[ideaID] = ctx.request.body;
-        return Response.json(ctx, ideas[ideaID]);
+        const {title, description, author_id} = ctx.request.body;
+        const result = await ctx.db.query(`
+            INSERT INTO ideas (title, description, author_id) 
+            VALUES ($1, $2, $3) RETURNING *`, [title, description, author_id]
+        );
+        return Response.json(ctx, result.rows[0]);
     }
 }
 
