@@ -16,8 +16,8 @@ app.init = async () => {
 
   app.use(bodyParser());
 
-  const connection = await db.getConnection();  
-  app.context.db = connection;
+  await db.sync();
+  app.context.sequelize = db;
 
   // routes
   app.use(mainRoutes);

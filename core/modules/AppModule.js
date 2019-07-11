@@ -1,5 +1,6 @@
-const Joi = require('@hapi/joi');
+import Ideas from '../../models/ideas';
 
+const Joi = require('@hapi/joi');
 const Response = require("core/Response");
 const  postValidation  = require("utils/IdeaValidation");
 
@@ -8,9 +9,9 @@ class AppModule {
     async ping(ctx) {
         return Response.text(ctx, "pong");
     }
-    async getAllIdeas(ctx) {
-        const result = await ctx.db.query('SELECT * FROM ideas');
-        return Response.json(ctx, result.rows);
+    async getAllIdeas(ctx) { 
+        const ideas = await Ideas.findAll();
+        return Response.json(ctx, ideas);
     }
     async getIdea(ctx) {
         const ideaID = ctx.request.params.id;
