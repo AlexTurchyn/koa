@@ -1,8 +1,13 @@
+const sequelize = require('../lib/database');
+const Sequelize = require('sequelize');
+
+
 const Ideas = sequelize.define('ideas', {
   // attributes
-  idea_id: {
-    type: Sequelize.UUID,
+  ideaid: {
+    type: Sequelize.INTEGER,
     primaryKey: true,
+    autoIncrement: true,
     allowNull: false
   },
   title: {
@@ -12,8 +17,8 @@ const Ideas = sequelize.define('ideas', {
   description: {
     type: Sequelize.STRING,
   },
-  author_id: {
-    type: INTEGER,
+  authorid: {
+    type: Sequelize.INTEGER,
   }
 }, {
   // options
